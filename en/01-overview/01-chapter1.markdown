@@ -25,7 +25,7 @@ Here is a simple example of requesting a list of accounts for a particular user:
     X-Powered-By: ASP.NET
     Date: Fri, 18 Mar 2011 18:21:45 GMT
 
-    [{"Key":114275,"Name":"543061 QA","Type":"C","TypeDescription":"Cash"},{"Key":114276,"Name":"5430611 QA","Type":"M","TypeDescription":"Margin"},{"Key":114277,"Name":"5430612 QA","Type":"F","TypeDescription":"Futures"}]
+Insert [{"Key":114275,"Name":"543061 QA","Type":"C","TypeDescription":"Cash"},{"Key":114276,"Name":"5430611 QA","Type":"M","TypeDescription":"Margin"},{"Key":114277,"Name":"5430612 QA","Type":"F","TypeDescription":"Futures"}].json
 
 ## Other Notes
 
