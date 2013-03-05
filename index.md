@@ -1,5 +1,5 @@
 ---
-layout: en
+layout: index
 ---
 
 ## What is the TradeStation WebAPI?
