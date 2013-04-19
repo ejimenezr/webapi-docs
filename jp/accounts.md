@@ -1,21 +1,22 @@
 ---
-layout: en
-title: Accounts
+layout: jp
+title: アカウント
 category: accounts
 permalink: accounts/
 weight: 3
 ---
 
-### Summary
+### 概要
 
-The Accounts Service provides the consumer with resources to access balance, positions, and orders for a particular account.
+アカウントサービスは、ある特定のアカウントの差額（バランス）、建玉（ポジション）、または、注文の情報を提供致します。
 
-### Service URI
+
+### サービスURI
 
 `https://api.tradestation.com/v2/accounts/{accountkey}/{method}`
 
-### Methods
+### Method（関数）
 
-* [Balances](balances) | Retrieves balance information for a given account.
-* [Positions](positions) | Retrieves the positions for a given account.
-* [Orders](orders) | Retrieves order information for a given account.
+* [差額](balances) | あるアカウントの差額情報を取り出します。
+* [建玉](positions) | あるアカウントの建玉情報を取り出します。
+* [注文](orders) | あるアカウントの注文情報を取り出します。

@@ -1,74 +1,79 @@
 ---
 layout: en
-title: Orders
+title: 注文
 category: orders
 permalink: orders/
 weight: 5
 ---
 
-### Summary
+### 概要
 
-The Orders Service provides the ability to send, cancel, and replace an order, in addition to providing cost and commission information for an order prior to submitting it.
+注文サービスにより、注文の登録・キャンセル・交換することができます。また、注文を登録する前に、費用とコミッションの情報も提供されます。
 
-The Orders Service also provides the ability to send conditional orders.
+注文サービスも条件付き注文の送信もできます。
 
-### Service URI
+### サービスURI
 
 `https://api.tradestation.com/v2/orders/{method}`
 
-### Methods
+### 関数（Methods）
 
-* [Place Order](place-order) | Submits an order to the order execution engine
-* [Cancel Order](cancel-order) | Cancels an order that is provided in the URI
-* [Update Order](update-order) | Cancels and Replaces an order provided to the URI
-* [Send Group Order](send-group-order) | Submits a group order to the order execution engine
-* [Confirm Order](confirm-order) | Returns estimated costs and commissions for an order without placing the order
-* [Confirm Group Order](confirm-group-order) | Returns estimated cost and comission information for a group of orders without orders actually being placed
+* [注文の登録](place-order) | 注文を実行するためのエンジンに注文を登録します。
+* [注文のキャンセル](cancel-order) | 注文をキャンセルします。この注文はURIで提供されます。
+* [注文の更新](update-order) | ある特定注文をキャンセルして、代わりにURIで提供されている注文を登録します。
+* [いくつかの注文の送信](send-group-order) |  注文を実行するためのエンジンにいくつかの注文を登録します。
+* [注文の確認](confirm-order) | 注文を登録せず、注文のための費用とコミッションの情報を提供します。
+* [いくつかの注文の確認](confirm-group-order) | 注文を登録せず、いくつかの注文のための費用とコミッションの情報を提供します。
 
-### Conditional Orders
 
-First implementation of conditional orders requires that the orders be placed at the same time.
+### 条件付き注文
 
-#### Order Cancels Order(s) - OCO Orders
+条件付き注文を最初に設定するために、それらの注文を同時に登録する必要があります。
 
-An OCO order is a group of orders whereby if one of the orders is filled or partially-filled, then all of the other orders in the group are cancelled.
+#### 注文をキャンセルするための注文 （Order Cancels Order, OCO）
 
-* OCA Order definition
-  * OCA orders should not be allowed to be placed across different accounts
-  * There can be an unlimited amount of orders in an OCA group
+OCO注文では、いくつかの注文の中のいずれかが満たされているか、または一部満たされている場合、ほかの残りの注文がキャンセルされます。
 
-#### Bracket OCO Orders
+* OCA注文の定義
+  * OCA注文が異なるアカウントで登録べきではないものです。
+  * OCAの集まりの中で、注文数が無限です。
 
-A bracket order is a special instance of an OCO (Order Cancel Order). Bracket orders are used to exit an existing position. They are designed to limit loss and lock in profit by "bracketing" an order with a simultaneous stop and limit order. Bracket orders are limited so that the orders are all for the same symbol and are on the same side of the market (either all to sell or all to cover), and they are restriced to closing transactions. The reason that they follow these rules is because the orders need to be able to auto decrement when a partial fill occurs with one of the orders. For example, if the customer has a sell limit order for 1000 shares and a sell stop order for 1000 shares, and the limit order is partially filled for 500 shares, then the customer would want the stop to remain open, but it should automatically decrement the order to 500 shares to match the remaining open position.
+#### ブラケットOCO注文
 
-#### Order Sends Order(s) - OSO Orders
+ブラケット注文とはOCO (Order Cancel Order)の特別のインスタンスです。ブラケット注文は既存の建玉を終了するために、使われています。同時のストップと指し値注文で注文を「ブラケット」することにより、ロスを制限し、利益をロックすることために、作成されています。全てのブラケット注文は同じシンボルだけで使われているという制限があり、同じマーケットの目的、例えば全てが売るかカバーするために使われている制限もあり、また、閉じ取引だけで使われている制限もあります。これらのルールの理由は、いずれかの注文が一部満たされている場合、全ての注文がオートデクリメントされる必要があるためです。例えば、あるお客様が1000株の売り指し値注文と1000株の売りストップ注文があり、指し値が500株で一部満たされている場合、お客様はそのストップがまだ有効にしたいですが、残りの開いてる建玉に一致するために、500株まで自動的にデクリメントする必要があります。
 
-An OSO order is a group of orders (1 or more orders) whereby if the primary order is completely filled, the secondary order(s) will be sent to the market. OSO orders can be used in combination with an OCO or Bracket OCO orders when a customer places an order and wants to have a Bracket OCO Order (stop loss and profit target) sent once the initial order is filled.
+#### 注文送信する注文　（Order Sends Order - OSO Orders）
 
-* OSO order
-  * One primary order
-  * One or more secondary orders
-  * OSO orders can be nested to any level
-  * Secondary order could be a Bracket order or an OCA
-  * OSO orders can be placed across different accounts
+OSO注文とは、注文のグループ（一つの注文か、いくつかの注文）の中で、主要な注文が完全に満たされている場合、二次の注文がマーケットに送られるものです。お客様が注文をして、最初の注文が満たされた後、ブラケットOCO注文（ロスの停止・利益の目的）を送りたい場合、OSO注文は、OCOまたはブラケットOCO注文と組み合わせて使用することができます。
 
-#### Trailing Stop
+* OSO注文
+  * 一つの主要な注文
+  * 1つか、またはそれ以上の二次注文
+  * OSO注文は、任意ののレベルに入れ子にすることができます
+  * 二次注文の場合、ブラケット注文かOCA注文になる可能性があります
+  * OSO注文は異なるいくつかのアカウントで登録できます
 
-* Can only be used with StopMarket type orders
-* Points are integer values only
-* Percentages can be sent with 2 decimal places max
-* When updating this type order, users can change the trail amount and quantity of shares
+#### トレール注文
 
-*Errors:*
+* ストップマーケット型の受注のみで使用することができます
+* ポイントは、整数値だけです
+* パーセンテージは小数点以下2桁の最大値で送信することができます
+* この注文のタイプを更新するとき、ユーザーが株のトレール量と数量を変更することができます
 
-* 400 Message = Order failed. Reason: Trailing stop is valid for stop orders only
-* 400 Message = Order failed. Reason: Trailing stop limit order requires an Auto-Limit condition
-* 400 Failed to build order: Invalid trailing stop number by points
-* 400 Failed to build order confirmation: Invalid trailing stop number by percentage
+*エラー:*
 
-Trailing Stops can be placed for stop market order by points or by percentage. Whe setting a trailing stop with the points option, the user will enter an integer value for the number of points.
+* ４００メッセージ　＝　注文失敗。理由：　トレーリングストップは、ストップ注文のみ有効されています
+* ４００メッセージ　＝　注文失敗。理由：　ストップリミット注文はオートリミット条件が必要です
+* ４００注文の作成に失敗しました：　ポイントによるトレーリングストップの数が無効です
+* ４００注文確認の作成に失敗しました：　割合によるトレーリングストップの数が無効です
+
+ポイントまたはパーセントによって、トレーリングストップがストップマーケット注文のために登録できます。ポイントオプション付きトレーリングストップを設定する場合、ユーザーはポイント数のための整数値を入力します。
 
 Points are calculated for a particular symbol by multiplying the [Display Type enumeration](../objects/quote/#display_type_options) in the quote object for the symbol, which maps to a particular decimal value, with the minMove value, which is also in the quote object.
+
+シンボルの見積もりオブジェクトの中にあるディスプレイタイプ列挙を乗じることにより、ポイントはある特定のシンボルのために計算されています。
+
+
 
 Ex. ESZ11 -> DisplayType = 3 which maps to .01 and MinMove = 25 so the point value will be .25. So 1 point maps to .25, 2 points map to .50.
 

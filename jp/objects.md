@@ -1,9 +1,9 @@
 ---
 layout: en
-title: Objects
+title: オブジェクト
 category: objects
 permalink: objects/
 weight: 8
 ---
 
-These are all the objects that can be either sent to or returned from the WebAPI. [Format is determined based on the request](../getting-started/response-formats). Select an object from the navigation to see schema.
+これらの全てのオブジェクトはWebAPIで送受信できます。[リクエストによりフォーマットが定義されます](../getting-started/response-formats)。スキーマを見るために、ナビゲーションからオブジェクトを選択してください。

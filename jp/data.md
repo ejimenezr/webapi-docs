@@ -1,53 +1,52 @@
 ---
-layout: en
-title: Data
+layout: jp
+title: データ
 category: data
 permalink: data/
 weight: 6
 ---
 
-### Overview
+### 概要
 
-Provides synchronous access to market data resources. Internally this service uses the same data access components as are used in the TradeStation Platform.
+このサービスは、マーケットデータの同期アクセスを提供します。内部的にこのサービスはTradeStationプラットホームが使われている同じデータアクセスコンポを使用します。
 
-### Service URI
+### サービスURI
 
 `https://api.tradestation.com/v2/data/{method}`
 
-### Methods
+### 関数（Methods）
 
-* [Quote](quote) | Retrieves a snapshot for a given list of symbols
-* [Symbol Lookup](symbol-lookup) | Resource that can be used to search for symbols that fit a given criteria
-* [Get Symbol](get-symbol) | Request symbol information for a given symbol
-* [Get Symbols](get-symbols-in-a-symbol-list) | Resource that returns the symbols in the symbol list
-* [Get Symbol List](get-symbol-list) | Resource that returns a specific pre-defined symbol list
-* [Get Symbol Lists](get-symbol-lists) | Resource that returns all pre-defined symbol lists
-* [Symbol Suggest](symbol-suggest) | Returns a list of symbol objects from provided input
+* [気配](quote) | ある特定の会社シンボルリストのためのスナップショットを取り出します。
+* [会社シンボル検索](symbol-lookup) | ある特定検索条件を設定することによって、会社シンボルを検索できます。
+* [会社シンボルのゲット](get-symbol) | ある会社シンボルの情報をゲットします。
+* [いくつかの会社シンボルのゲット](get-symbols-in-a-symbol-list) | 会社シンボルのリストを取り出すための関数です。
+* [会社シンボルリストのゲット](get-symbol-list) | 予めに定義されたある特定の会社シンボルのリストを取り出します。
+* [いくつかの会社シンボルリストのゲット](get-symbol-lists) | 予めに定義された全ての会社シンボルのリストを取り出します。
+* [会社シンボルの提案](symbol-suggest) | 入力情報により、会社シンボルのリストを返します。
 
+### マネックスのお客様のための日本の普通株
 
-### Japanese Equities for our Monex Customers
-
-We precede all Japanese Equity symbols with a `JP:`, so Monex's symbol would be JP:8698. This will return a full day session. By adding the extension `.M` (e.g.: JP:8698.M), only the morning session is returned. By adding the extension `.A` (e.g.: JP:8698.A), only the afternoon session is returned.
+全ての日本の普通株の会社シンボルは最初に「JP:」という表現を付けます。このため、マネックスのシンボルとは、「JP:8698」です。これは終日のセッションを返します。「.M」のエクステンションを追加することにより、例えば「JP:8698.M」、前場だけ返します。「.A」のエクステンションを追加することにより、例えば「JP:8698.A」、後場のセッションだけ返します。
 
 `[country]:[code].[session]-[exchange]`
 
-These quotes will be for the main listing exchange. In addition, we'll provide quotes for the regional exchanges. So a quote for Monex on Osaka would be JP:8698-OS. You can also use the .M and .A modifiers with that if you want only the morning or afternoon activity -- for example, JP:8698.M-OS or JP:8698.A-OS.
+これらのクオートは主な上場取引所のためです。また、地域取引所のためのクオートを提供します。このため、大阪のマネックスのためのクオートは「JP:8698-OS」になります。「.M」と「.A」の修飾子は前場か後場の情報を読み込むために使用できます。例えば、「JP:8698.M-OS」か、「JP:8698.A-OS」になります。
 
-The Japanese country prefix is as follows:
+日本の会社シンボルの名前には最初に次の表現を付けます。
 
 * `JP:`
 
-The Morning and Afternoon session codes are as follows:
+午前と午後のセッションのコードは次のようです。
 
-* Morning = `.M`
-* Afternoon = `.A`
-* Combined Morning and Afternoon = No Extension
+* 前場= `.M`
+* 後場= `.A`
+* 前場と後場の両方 = エクステンションなし
 
-The regional exchange codes are as follows:
+地域取引所のコードは次のようです。
 
-* Fukuoka = `FK`
-* JASDAQ = `JQ`
-* Nagoya = `NG`
-* Osaka = `OS`
-* Sapporo = `SP`
-* Tokyo = `TS`
+* 福岡 = `FK`
+* ジャスダック証券取引所 = `JQ`
+* 名古屋 = `NG`
+* 大阪 = `OS`
+* 札幌 = `SP`
+* 東京 = `TS`

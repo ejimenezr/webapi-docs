@@ -1,6 +1,6 @@
 ---
 layout: en
-title: Getting Started
+title: はじめに
 category: getting-started
 permalink: getting-started/
 weight: 1
